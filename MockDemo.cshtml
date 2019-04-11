@@ -1,3 +1,4 @@
+<!-- Get progress -->
 @{
     try
     {
@@ -19,3 +20,31 @@
 
 }
 
+<!-- Post progress (half way on scroll)-->
+    <script async>
+        
+        $(window).on('scroll', function () {
+            if (checkHalfWay($("#learning-center-article"))) {
+                if ($.cookie("hubspotutk")) {
+                    let utk = $.cookie("hubspotutk");
+                    var id = @article.Id;
+                    $.post( `/Umbraco/Api/SubscriptionsAPI/SubscribeLearningCenter?utk=${utk}&id=${id}`, function(data) {
+                        console.log(data);
+                    });
+                }
+                $(window).off('scroll');
+            }
+        });
+
+        function checkHalfWay( elm, eval ) {
+            eval = eval || "object visible";
+            var viewportHeight = $(window).height(), // Viewport Height
+                scrolltop = $(window).scrollTop(), // Scroll Top
+                elementHeight = $(elm).height(),
+                y = ($(elm).offset().top + elementHeight) / 2;
+
+            if (eval == "object visible") return ((y < (viewportHeight + scrolltop)) && (y > (scrolltop - elementHeight)));
+            if (eval == "above") return ((y < (viewportHeight + scrolltop)));
+        }
+
+    </script>
