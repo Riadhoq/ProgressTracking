@@ -1,0 +1,21 @@
+@{
+    try
+    {
+        if (Request.Cookies["hubspotutk"] != null)
+        {
+            var progress = new LearningCenterProgress(Model, Request.Cookies["hubspotutk"]?.Value);
+
+            readArticle = progress.GetReadArticleListFromHubSpot();
+
+            //progress.PostNewHubSpotPropertyValue();
+        }
+
+    }
+
+    catch (Exception ex)
+    {
+        <!--@ex.Message-->
+    }
+
+}
+
